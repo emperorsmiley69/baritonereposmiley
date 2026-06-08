@@ -125,8 +125,14 @@ io.on('connection', (socket) => {
   })
 })
 
-// Single dynamic port for cloud infrastructure
+// Old code:
+// http.listen(PORT, () => { ... })
+
+// NEW CODE: Explicitly bind to 0.0.0.0 for cloud environments
 const PORT = process.env.PORT || 5000; 
-http.listen(PORT, () => { 
+
+http.listen(PORT, '0.0.0.0', () => { 
   console.log(`Unified Control Tower active on port ${PORT}`); 
+  console.log(`Bound to host interface 0.0.0.0`);
 });
+
