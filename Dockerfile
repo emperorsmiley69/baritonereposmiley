@@ -1,6 +1,6 @@
 FROM node:18-slim
 
-# Install system dependencies needed for headless gl/canvas rendering
+# Install system dependencies needed for building headless gl/canvas native modules
 RUN apt-get update && apt-get install -y \
     python3 \
     make \
@@ -10,7 +10,12 @@ RUN apt-get update && apt-get install -y \
     libgl1-mesa-dev \
     libglu1-mesa-dev \
     libglew-dev \
-    libcanvas-nodejs-dev \
+    libc6-dev \
+    libpixman-1-dev \
+    libcairo2-dev \
+    libpango1.0-dev \
+    libjpeg-dev \
+    libgif-dev \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
