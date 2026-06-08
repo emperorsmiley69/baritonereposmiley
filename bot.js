@@ -9,15 +9,15 @@ const app = express()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 
-// CLOUD IP CONFIGURATION
-const MC_HOST = process.env.MC_HOST || 'localhost'
+// CLOUD IP CONFIGURATION (Fallbacks used if no Environment Variables are set)
+const MC_HOST = process.env.MC_HOST || 'smileysmp.eagler.host'
 const MC_PORT = parseInt(process.env.MC_PORT) || 25565
-const MC_USERNAME = process.env.MC_USERNAME || 'EmpireWebBot'
+const MC_USERNAME = process.env.MC_USERNAME || 'EmpireBuilder'
 
 const bot = mineflayer.createBot({
-  host: smileysmp.eagler.host,
-  port: 25565,
-  username: EmpireBuilder,
+  host: MC_HOST,
+  port: MC_PORT,
+  username: MC_USERNAME,
   version: '1.12.2'
 })
 
@@ -79,7 +79,7 @@ app.get('/', (req, res) => {
             <button onclick="sendCoordinates()">🚀 Navigate to Coords</button>
           </div>
           
-          <!-- Visual Monitors (Loaded dynamically from the same domain) -->
+          <!-- Visual Monitors -->
           <div class="right-panel">
             <iframe class="view-3d" src="/viewer" title="3D View"></iframe>
             <iframe class="view-inv" src="/inventory" title="Inventory"></iframe>
@@ -125,14 +125,12 @@ io.on('connection', (socket) => {
   })
 })
 
-// Old code:
-// http.listen(PORT, () => { ... })
-
-// NEW CODE: Explicitly bind to 0.0.0.0 for cloud environments
-const PORT = process.env.PORT || 5000; 
+// Force the app to bind to Render's preferred port (10000), or fallback to environment variables
+const PORT = process.env.PORT || 10000; 
 
 http.listen(PORT, '0.0.0.0', () => { 
-  console.log(`Unified Control Tower active on port ${PORT}`); 
-  console.log(`Bound to host interface 0.0.0.0`);
+  console.log(`=========================================`);
+  console.log(`👑 SUCCESS: Control Tower website is live!`);
+  console.log(`🌐 Listening on: http://0.0.0.0:${PORT}`);
+  console.log(`=========================================`);
 });
-
